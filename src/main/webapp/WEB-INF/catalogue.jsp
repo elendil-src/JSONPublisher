@@ -14,24 +14,31 @@
  -->
 </head>
 <body>
-<style type="text/css">
+	<style type="text/css">
 #submit {
- background-color: #bbb;
- padding: .5em;
- -moz-border-radius: 5px;
- -webkit-border-radius: 5px;
- border-radius: 6px;
- color: #fff;
- font-family: 'Oswald';
- font-size: 20px;
- text-decoration: none;
- border: none;
+	background-color: #bbb;
+	padding: .5em;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 6px;
+	color: #fff;
+/* Fixme	font-family: 'Oswald';
+	font-size: 20px; */
+	text-decoration: none;
+	border: none;
 }
 
 #submit:hover {
- border: none;
- background: orange;
- box-shadow: 0px 0px 1px #777;
+	border: none;
+	background: orange;
+	box-shadow: 0px 0px 1px #777;
+}
+
+#search {
+    min-width: 400px;   
+}
+
+
 }
 </style>
 
@@ -50,23 +57,21 @@
 		</div>
 		<% String action = "Search" ; %>
 		<% String lastSearchTerm = (String)request.getAttribute("lastSearchTerm");%>
-        <% String resultState = (String)request.getAttribute("resultState");%>
-<%  if (resultState != null && resultState == "filteredCatalogue") { action = "Clear" ;  lastSearchTerm =  (lastSearchTerm == null ? "" : lastSearchTerm); } else { lastSearchTerm = ""; } %>
-			<!-- FIXME value remov default and apply when search results?-->
-        <p>action:<%= action %></p>
-                <p>lastSearchTerm<%= lastSearchTerm %></p>
-                        <p>resultState<%= resultState %></p>
+		<% String resultState = (String)request.getAttribute("resultState");%>
+		<%  if (resultState != null && resultState == "filteredCatalogue") { action = "Clear" ;  lastSearchTerm =  (lastSearchTerm == null ? "" : lastSearchTerm); } else { lastSearchTerm = ""; } %>
+		
+<%--		<p>			action:<%= action %></p>  --%>
+<%--		<p>		lastSearchTerm<%= lastSearchTerm %></p> --%>
+<%--		<p>		resultState<%= resultState %></p> --%>
 
 		<div class="row">
-			<div class="col-lg-4 col-lg-offset-4">
-			<!-- FIXME value remov default and apply when search results?-->
-			<form action="" method="get">
-				<input type="text" id="search" value="<%= lastSearchTerm %>"
-				  class="form-control"
-					placeholder="Enter title" name="searchTerm" >
-			<input id="submit" type="submit" value="<%= action %>" name="action">
-
-			</form>
+			<div class="col-lg-12 col-lg-offset-4">
+				<form action="" method="get" class="form-inline">
+					<input  type="text" id="search" value="<%= lastSearchTerm %>"
+						class="form-control col-lg-10" placeholder="Enter title" name="searchTerm">
+					<input  id="submit" type="submit" value="<%= action %>"
+						name="action">
+				</form>
 			</div>
 		</div>
 		<% List<Product> productResult = (List<Product>)request.getAttribute("productResult");%>
@@ -78,26 +83,32 @@
 		<div class="g">
 
 			<!--m-->
-<!--			<div data-ved="2ahUKEwjB3um9l-_kAhVQ6RoKHQC8A0wQFSgAMBx6BAgEEAA"	data-hveid="CAQQAA"> -->
-				<div class="rc">
-					<div class="r">
-						<!-- 					<a
+			<!--			<div data-ved="2ahUKEwjB3um9l-_kAhVQ6RoKHQC8A0wQFSgAMBx6BAgEEAA"	data-hveid="CAQQAA"> -->
+<!-- 			<div class="rc"> -->
+<!-- 				<div class="r"> -->
+					<!-- 					<a
 						onmousedown="return rwt(this,'','','','29','AOvVaw0EvBLT1xbVJNF17xS5AWnb','','2ahUKEwjB3um9l-_kAhVQ6RoKHQC8A0wQFjAcegQIBBAB','','',event)"
 						href="https://bingads.microsoft.com/">
  -->
-						<h3 class="LC20lb">
+<!-- 					<h4 class="LC20lb"> -->
 
-							<div class="ellip">
-								<%= product.getTitle()%>
-							</div>
-						</h3>
-						<br>
-						<div class="TbwUpd">
-							<cite class="iUh30"> <%= product.getId()%>
-							</cite>
-						</div>
-						<!-- 						</a> -->
-						<!-- 						<span><div class="action-menu ab_ctl">
+<!-- 						<div class="ellip"> -->
+<%-- 							<%= product.getTitle()%> --%>
+<!-- 						</div> -->
+<!-- 					</h4> -->
+
+					<h4 class="ellip">
+							<%= product.getTitle()%>
+					</h4>
+
+
+					<div class="ellip">
+						<cite class="iUh30"> <%= product.getId()%>
+						</cite>
+					</div>
+					<br>
+					<!-- 						</a> -->
+					<!-- 						<span><div class="action-menu ab_ctl">
 							<a class="GHDvEf ab_button" id="am-b28" role="button"
 								aria-expanded="false" aria-haspopup="true"
 								aria-label="Result options" href="#"
@@ -120,8 +131,8 @@
 							</div>
 						</div></span>
  -->
-					</div>
-					<%-- 				<div class="s">
+<!-- 				</div> -->
+<%-- 				<div class="s">
 					<div>
 						<span class="st">
 							ID:<%= product.getDescription()%>
@@ -129,7 +140,7 @@
 					</div>
 				</div>
  --%>
-					<!-- 			<div id="ed_10"
+				<!-- 			<div id="ed_10"
 					data-ved="2ahUKEwjB3um9l-_kAhVQ6RoKHQC8A0wQ2Z0BMBx6BAgEEAY"
 					data-base-uri="/search?safe=strict">
 					<div class="AUiS2" jsname="UTgHCf"
@@ -159,40 +170,18 @@
 					</div>
 				</div>
  -->
-				</div>
-			</div>
-			<!--n-->
+<!-- 			</div> -->
 		</div>
-
+		<!--n-->
 		<!-- Results element end -->
 
-		<% } %>
+
+	<% } %>
+
+	</div>
 
 
-		<%--     <h1>Home-product</h1>
-        <p>Some text</p>
-        <% Product product = (Product)request.getAttribute("productInstanc");%>
-        <p>ID:<%= product.getId()%> </p>
-        <p>TITLE:<%= product.getTitle()%>  </p>
 
-        <tab heading="Search">
-            <div>
-                <h2>Welcome name </h2>
-                    <form action="home" method="post">
-                        <p>
-                            Name: <input type="text" name="name"/>
-                        </p>
 
-                        <p>
-                                input type="submit" value="Enter name">
-                        </p>
-                    </form>
-                </div>
-                <div class="g"><!--m-->
-    </div>
-
-                    </tab>
- --%>
-</div>
 </body>
 </html>
