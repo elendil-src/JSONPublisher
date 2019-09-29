@@ -48,8 +48,15 @@
 				<h3>Search by Product Title</h3>
 			</div>
 		</div>
-		<% String lastSearchTerm = (String)request.getAttribute("searchTerm");%>
-		<% lastSearchTerm =  (lastSearchTerm == null ? "" : lastSearchTerm); %>
+		<% String action = "Search" ; %>
+		<% String lastSearchTerm = (String)request.getAttribute("lastSearchTerm");%>
+        <% String resultState = (String)request.getAttribute("resultState");%>
+<%  if (resultState != null && resultState == "filteredCatalogue") { action = "Clear" ;  lastSearchTerm =  (lastSearchTerm == null ? "" : lastSearchTerm); } else { lastSearchTerm = ""; } %>
+			<!-- FIXME value remov default and apply when search results?-->
+        <p>action:<%= action %></p>
+                <p>lastSearchTerm<%= lastSearchTerm %></p>
+                        <p>resultState<%= resultState %></p>
+
 		<div class="row">
 			<div class="col-lg-4 col-lg-offset-4">
 			<!-- FIXME value remov default and apply when search results?-->
@@ -57,8 +64,8 @@
 				<input type="text" id="search" value="<%= lastSearchTerm %>"
 				  class="form-control"
 					placeholder="Enter title" name="searchTerm" >
-			<input id="submit" type="submit" value="Submit">
-			<a class="btn btn-primary my-2" href="#">Find</a>
+			<input id="submit" type="submit" value="<%= action %>" name="action">
+
 			</form>
 			</div>
 		</div>
@@ -71,8 +78,7 @@
 		<div class="g">
 
 			<!--m-->
-			<div data-ved="2ahUKEwjB3um9l-_kAhVQ6RoKHQC8A0wQFSgAMBx6BAgEEAA"
-				data-hveid="CAQQAA">
+<!--			<div data-ved="2ahUKEwjB3um9l-_kAhVQ6RoKHQC8A0wQFSgAMBx6BAgEEAA"	data-hveid="CAQQAA"> -->
 				<div class="rc">
 					<div class="r">
 						<!-- 					<a
@@ -82,12 +88,12 @@
 						<h3 class="LC20lb">
 
 							<div class="ellip">
-								TITLE:<%= product.getTitle()%>
+								<%= product.getTitle()%>
 							</div>
 						</h3>
 						<br>
 						<div class="TbwUpd">
-							<cite class="iUh30"> ID:<%= product.getId()%>
+							<cite class="iUh30"> <%= product.getId()%>
 							</cite>
 						</div>
 						<!-- 						</a> -->
