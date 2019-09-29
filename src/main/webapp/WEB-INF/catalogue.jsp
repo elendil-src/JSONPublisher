@@ -1,68 +1,97 @@
-<%@ page import="com.elendil.app.demo.Product" %>
-<%@ page import="java.util.List" %>
+<%@ page import="com.elendil.app.demo.Product"%>
+<%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title
-    </title>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<title>Title</title>
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+ -->
 </head>
 <body>
+<style type="text/css">
+#submit {
+ background-color: #bbb;
+ padding: .5em;
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
+ border-radius: 6px;
+ color: #fff;
+ font-family: 'Oswald';
+ font-size: 20px;
+ text-decoration: none;
+ border: none;
+}
+
+#submit:hover {
+ border: none;
+ background: orange;
+ box-shadow: 0px 0px 1px #777;
+}
+</style>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12  col-lg-offset-4">
+				<div class="page-header">
+					<h1>Product Catalogue</h1>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12  col-lg-offset-4">
+				<h3>Search by Product Title</h3>
+			</div>
+		</div>
+		<% String lastSearchTerm = (String)request.getAttribute("searchTerm");%>
+		<% lastSearchTerm =  (lastSearchTerm == null ? "" : lastSearchTerm); %>
+		<div class="row">
+			<div class="col-lg-4 col-lg-offset-4">
+			<!-- FIXME value remov default and apply when search results?-->
+			<form action="" method="get">
+				<input type="text" id="search" value="<%= lastSearchTerm %>"
+				  class="form-control"
+					placeholder="Enter title" name="searchTerm" >
+			<input id="submit" type="submit" value="Submit">
+			<a class="btn btn-primary my-2" href="#">Find</a>
+			</form>
+			</div>
+		</div>
+		<% List<Product> productResult = (List<Product>)request.getAttribute("productResult");%>
+		<% for (int i=0 ; i < productResult.size() ; i++) { %>
+		<%  Product product = productResult.get(i); %>
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12  col-lg-offset-4">
-            <div class="page-header">
-                <h1>Product Catalogue</h1>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12  col-lg-offset-4">
-            <h3>Search by Product Title</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4 col-lg-offset-4">
-            <input type="search" id="search" value="" class="form-control" placeholder="Enter title">
-        </div>
-    </div>
-</div>
+		<!-- Result element start -->
+		<div class="g">
 
-	        <% List<Product> productResult = (List<Product>)request.getAttribute("productResult");%>
-        <% for (int i=0 ; i < productResult.size() ; i++) { %>
-        <%  Product product = productResult.get(i); %>
-
-	        
-<!-- Result element start -->
-	<div class="g">
-
-		<!--m-->
-		<div data-ved="2ahUKEwjB3um9l-_kAhVQ6RoKHQC8A0wQFSgAMBx6BAgEEAA"
-			data-hveid="CAQQAA">
-			<div class="rc">
-				<div class="r">
-<!-- 					<a
+			<!--m-->
+			<div data-ved="2ahUKEwjB3um9l-_kAhVQ6RoKHQC8A0wQFSgAMBx6BAgEEAA"
+				data-hveid="CAQQAA">
+				<div class="rc">
+					<div class="r">
+						<!-- 					<a
 						onmousedown="return rwt(this,'','','','29','AOvVaw0EvBLT1xbVJNF17xS5AWnb','','2ahUKEwjB3um9l-_kAhVQ6RoKHQC8A0wQFjAcegQIBBAB','','',event)"
 						href="https://bingads.microsoft.com/">
- -->						<h3 class="LC20lb">
-					        
+ -->
+						<h3 class="LC20lb">
+
 							<div class="ellip">
-								TITLE:<%= product.getTitle()%>					
+								TITLE:<%= product.getTitle()%>
 							</div>
 						</h3>
 						<br>
-					<div class="TbwUpd">
-							<cite class="iUh30">
-						        ID:<%= product.getId()%>
+						<div class="TbwUpd">
+							<cite class="iUh30"> ID:<%= product.getId()%>
 							</cite>
 						</div>
-<!-- 						</a> -->
-<!-- 						<span><div class="action-menu ab_ctl">
+						<!-- 						</a> -->
+						<!-- 						<span><div class="action-menu ab_ctl">
 							<a class="GHDvEf ab_button" id="am-b28" role="button"
 								aria-expanded="false" aria-haspopup="true"
 								aria-label="Result options" href="#"
@@ -84,15 +113,17 @@
 								</ol>
 							</div>
 						</div></span>
- -->				</div>
-<%-- 				<div class="s">
+ -->
+					</div>
+					<%-- 				<div class="s">
 					<div>
 						<span class="st">
 							ID:<%= product.getDescription()%>
 							</span>
 					</div>
 				</div>
- --%>	<!-- 			<div id="ed_10"
+ --%>
+					<!-- 			<div id="ed_10"
 					data-ved="2ahUKEwjB3um9l-_kAhVQ6RoKHQC8A0wQ2Z0BMBx6BAgEEAY"
 					data-base-uri="/search?safe=strict">
 					<div class="AUiS2" jsname="UTgHCf"
@@ -121,17 +152,18 @@
 						</div>
 					</div>
 				</div>
- -->			</div>
+ -->
+				</div>
+			</div>
+			<!--n-->
 		</div>
-		<!--n-->
-	</div>
 
-<!-- Results element end -->    
+		<!-- Results element end -->
 
-<% } %>
-        
-        
-<%--     <h1>Home-product</h1>
+		<% } %>
+
+
+		<%--     <h1>Home-product</h1>
         <p>Some text</p>
         <% Product product = (Product)request.getAttribute("productInstanc");%>
         <p>ID:<%= product.getId()%> </p>
@@ -155,6 +187,6 @@
 
                     </tab>
  --%>
-
-		</body> 
+</div>
+</body>
 </html>

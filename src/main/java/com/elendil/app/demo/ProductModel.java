@@ -1,11 +1,13 @@
 package com.elendil.app.demo;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.servlet.ServletException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class ProductModel
 //    private JsonParser parser ;
 
 
-void init() throws java.io.IOException, JsonParseException
+void init() throws java.io.IOException
 {
     productJSONFile = new File(sourceFileName);
     productTree = objectMapper.readTree(productJSONFile);
@@ -42,25 +44,51 @@ void init() throws java.io.IOException, JsonParseException
 
 
 // FIXME: Close file & DOM Tree in destructor
-
-
-    List<Product> retrieveProducts()
+// FIXME:javadoc?
+//FIXME chcek handling of nulls
+    static private boolean titlePartialMatch(final String partialTerm, final String target)
     {
-        List<Product> productsList = new ArrayList<>();
+        if (partialTerm != null && target !=null)
+        {
+            if (partialTerm.isEmpty())
+            {
+                return true;
+            }
+            return target.toUpperCase().contains(partialTerm.toUpperCase());
+        }
+        return false;
+    }
 
-//        JsonNode productTreeNode = findProductTreeNode(productTree);
+
+    List<Product> filterProducts(final String searchTerm) throws ServletException
+    {
+        String searchWith;
+        if (searchTerm == null)
+            searchWith = "";               // equates matching all
+        else
+            searchWith = searchTerm;
 
         JsonNode productTreeNode = productTree.findValue( "worksById");
+        if (productTreeNode == null) {
+            throw new ServletException("worksById node expected but not found");
+        }
+//Fixme handle errors & nulls?
+
+        List<Product> productsList = new ArrayList<>();
 
             Iterator<Map.Entry<String, JsonNode>> products = productTreeNode.fields();
-            while (products.hasNext() )
+            while (products.hasNext())
             {
                 Map.Entry<String, JsonNode> productNode = products.next();
-                Product p = new Product();
-                p.setTitle( productNode.getValue().findValue("TitleText").asText());
-                p.setId( productNode.getKey());
+                String productTitle = productNode.getValue().findValue("TitleText").asText();
 
-                productsList.add(p);
+                if (titlePartialMatch(searchWith, productTitle))
+                {
+                    Product p = new Product();
+                    p.setTitle(productTitle);
+                    p.setId(productNode.getKey());
+                    productsList.add(p);
+                }
             }
         return productsList;
 

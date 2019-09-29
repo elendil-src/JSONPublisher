@@ -5,7 +5,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Controller extends javax.servlet.http.HttpServlet {
@@ -31,17 +30,36 @@ public class Controller extends javax.servlet.http.HttpServlet {
 
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void  handleRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
 
+        resp.setContentType("text/html"); //FIXME
+//FIXME            resp.getWriter().println( "TEST {message: \"json from controller\" }" );
 
-            resp.setContentType("text/html");
-//            resp.getWriter().println( "TEST {message: \"json from controller\" }" );
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/product.jsp");
+        super.log("handleRequest()  called with:"  + req.getRequestURI() + ":" + req.getQueryString()); //FIXME
 
-            List<Product> productResult =  productModel.retrieveProducts();
-            req.setAttribute("productResult", productResult  );
-            dispatcher.forward(req, resp);
+        String searchTerm = req.getParameter("searchTerm");
+        List<Product> productResult =  productModel.filterProducts(searchTerm);
+
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/catalogue.jsp");
+
+        req.setAttribute("productResult", productResult  );
+        req.setAttribute("searchTerm", searchTerm  );
+        dispatcher.forward(req, resp);
+
 
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        handleRequest( req, resp);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handleRequest(req, resp);
+    }
+
+
 }

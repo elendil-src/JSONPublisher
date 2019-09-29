@@ -5,19 +5,22 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
-  -- servlet definition (class to a name, and any parameters)
+<!--  FIXME - browser tab title-->
+
+<!--  servlet definition (class to a name, and any parameters)-->
   <servlet>
     <servlet-name>Controller</servlet-name>
     <servlet-class>com.elendil.app.demo.Controller</servlet-class>
   </servlet>
 
-  -- mapping of servlet's name to URL pattern which will invoke it.
+<!--   mapping of servlet's name to URL pattern which will invoke it.-->
   <servlet-mapping>
     <servlet-name>Controller</servlet-name>
     <url-pattern></url-pattern>
   </servlet-mapping>
 
   <error-page>
+    <exception-type>java.lang.Exception</exception-type>
     <location>/WEB-INF/_error.jsp</location>
   </error-page>
 

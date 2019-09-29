@@ -7,6 +7,8 @@
 <body>
 <h2>Error Page</h2>
 <!-- FIXME get error page working -->
-<%= exception.getMessage() %>
+<p>
+<%= exception %>
+</p>
 </body>
 </html>
