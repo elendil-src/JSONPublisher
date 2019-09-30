@@ -2,6 +2,8 @@ package com.elendil.app.demo;
 
 /**
  * Simple data object that represents key properties of Product
+ * Public access required by View JSP
+ *
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class Product {

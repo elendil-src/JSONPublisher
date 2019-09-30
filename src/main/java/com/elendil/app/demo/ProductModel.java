@@ -6,10 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Responsible for integrity and interpretation of the business data that corresponds to Products.
@@ -66,7 +63,7 @@ class ProductModel {
     /**
      * Retrieves all items by forcing a wild card match
      * @return unordered list of all Products
-     * @throws ProductModelException
+     * @throws ProductModelException see filterProducts
      */
     List<Product> retrieveProducts() throws ProductModelException {
         return filterProducts("");
@@ -75,8 +72,8 @@ class ProductModel {
     /**
      * Searches JSON tree for matching products, and then builds the result set. Result set is unordered.
      *
-     * @param searchTerm
-     * @return unordered list of all Products
+     * @param searchTerm term to filter products by
+     * @return ordered list of all Products
      * @throws ProductModelException if data structure is invalid
      */
     List<Product> filterProducts(final String searchTerm) throws ProductModelException {
@@ -112,6 +109,8 @@ class ProductModel {
                 p.setProductForm(productForm);
                 productsList.add(p);
             }
+            Collections.sort(productsList, new ProductComparator() );
+
         }
         return productsList;
 
