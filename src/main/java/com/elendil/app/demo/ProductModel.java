@@ -11,12 +11,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-//javadoc fixme
+/**
+ * Responsible for integrity and interpretation of the business data that corresponds to Products.
+ */
 class ProductModel {
 
     final private JsonNode productTreeNode;
 
-    //javadoc fixme
+    /**
+     * Initialises the model
+     * @param sourceFileName location of the product data source
+     * @throws IOException thrown if data cannot be retried from file
+     * @throws ProductModelException if data is fails various validation rules
+     */
     ProductModel(final String sourceFileName) throws IOException, ProductModelException {
         ObjectMapper objectMapper = new ObjectMapper();
         File productJSONFile = new File(sourceFileName);
@@ -33,8 +40,13 @@ class ProductModel {
 
     }
 
-    // FIXME: Close file & DOM Tree in destructor
-// FIXME:javadoc? = describe handling of empty strings and nulls
+    /**
+     * Performs partial matching rule. Ignores case, accented characters. Empty strings are treated as matches.
+     * Any leading/trailing white spaces should be stripped before calling; they will be treated as significant.
+     * @param partialTerm term to be tested
+     * @param target  term against which a partial match is tested
+     * @return true if partialTerm matches part or all of target, otherwise false
+     */
     static private boolean titlePartialMatch(final String partialTerm, final String target) {
 
         if (partialTerm.isEmpty()) {
@@ -49,15 +61,23 @@ class ProductModel {
 
         return normalisedTarget.toUpperCase().contains(normalisedPartial.toUpperCase());
 
-
     }
 
+    /**
+     * Retrieves all items by forcing a wild card match
+     * @return unordered list of all Products
+     * @throws ProductModelException
+     */
     List<Product> retrieveProducts() throws ProductModelException {
         return filterProducts("");
     }
 
-    /*
-      @javadoc FIXME
+    /**
+     * Searches JSON tree for matching products, and then builds the result set. Result set is unordered.
+     *
+     * @param searchTerm
+     * @return unordered list of all Products
+     * @throws ProductModelException if data structure is invalid
      */
     List<Product> filterProducts(final String searchTerm) throws ProductModelException {
         List<Product> productsList = new ArrayList<>();
@@ -96,18 +116,5 @@ class ProductModel {
         return productsList;
 
     }
-
-
-
-
-/*
-    void parseJSONModel() throws IOException
-    {
-        while (parser.nextToken() != null)
-        {
-
-        }
-    }
-*/
 
 }

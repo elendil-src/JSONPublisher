@@ -10,11 +10,21 @@ import java.nio.file.Paths;
 import java.util.List;
 
 
-//FIXME @javadoc
+/**
+ * Class acts as the Controller in MVC pattern responsible for creating Model and serving requests from the view.
+ * Requires:
+ * <li>Config parameter that identifies the model data</li>
+ * <li>View to provide action and searchTerm parameters in order to action the view's request.
+ * Failure may result in error if request cannot be served</li>
+ * <li>View receives the state of the results, the content of the results, and the last search term if relevant</li>
+ */
 public class Controller extends javax.servlet.http.HttpServlet {
 
     private ProductModel productModel;
 
+    /**
+     * Initialises class including creating and partially validating the model.
+     */
     @Override
     public void init() throws ServletException {
 
@@ -33,6 +43,13 @@ public class Controller extends javax.servlet.http.HttpServlet {
         }
     }
 
+    /**
+     * Handles all requests for Servlet; action parameter is mandatory in request.
+     * @param req servlet's request parameter
+     * @param resp servlet's response parameter
+     * @throws ServletException
+     * @throws IOException
+     */
     private void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //super.log("handleRequest()  called with:" + req.getRequestURI() + ":" + req.getQueryString());
@@ -58,20 +75,16 @@ public class Controller extends javax.servlet.http.HttpServlet {
                 productResult = productModel.retrieveProducts();
                 resultState = "fullCatalogue";
             }
-
-
         } catch (ProductModelException e) {
             throw new ServletException(e);
         }
-        super.log("FIXME: searchTerm=" + searchTerm + ":action=" + action + ":resultState=" + resultState + ":resultNum=" + productResult.size());
+        //super.log("FIXME: searchTerm=" + searchTerm + ":action=" + action + ":resultState=" + resultState + ":resultNum=" + productResult.size());
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/catalogue.jsp");
         req.setAttribute("productResult", productResult);
         req.setAttribute("lastSearchTerm", searchTerm);
         req.setAttribute("resultState", resultState);
         dispatcher.forward(req, resp);
-
-
     }
 
 
@@ -84,6 +97,4 @@ public class Controller extends javax.servlet.http.HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         handleRequest(req, resp);
     }
-
-
 }

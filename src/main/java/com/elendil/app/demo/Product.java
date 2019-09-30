@@ -1,7 +1,10 @@
 package com.elendil.app.demo;
 
-//javadoc  fixme
-class Product {
+/**
+ * Simple data object that represents key properties of Product
+ */
+@SuppressWarnings({"WeakerAccess", "unused"})
+public class Product {
     private String id;
     private String title;
     private String productForm;

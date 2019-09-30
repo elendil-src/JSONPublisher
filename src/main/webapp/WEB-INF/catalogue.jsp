@@ -65,7 +65,10 @@
 				<form action="" method="get" class="form-inline">
 					<input type="text" id="search" value="<%= lastSearchTerm %>"
 						class="form-control col-lg-10" placeholder="Enter title"
-						name="searchTerm"> <input id="submit" type="submit"
+						name="searchTerm"
+						<%= (action.equalsIgnoreCase("Search") ? "" : "readonly") %>
+						>
+					<input id="submit" type="submit"
 						value="<%= action %>" name="action">
 				</form>
 			</div>
