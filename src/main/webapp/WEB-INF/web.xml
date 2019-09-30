@@ -1,27 +1,36 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <display-name>Archetype Created Web Application</display-name>
 
-<!--  FIXME - browser tab title-->
 
-<!--  servlet definition (class to a name, and any parameters)-->
-  <servlet>
-    <servlet-name>Controller</servlet-name>
-    <servlet-class>com.elendil.app.demo.Controller</servlet-class>
-  </servlet>
+    <!--  servlet definition (class to a name, and any parameters)-->
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>com.elendil.app.demo.Controller</servlet-class>
+        <init-param>
+            <param-name>
+                ProductDataJSONFilePath
+            </param-name>
+            <param-value>
+                WEB-INF/ELSIO-Graph-Example.json
+            </param-value>
+        </init-param>
+    </servlet>
 
-<!--   mapping of servlet's name to URL pattern which will invoke it.-->
-  <servlet-mapping>
-    <servlet-name>Controller</servlet-name>
-    <url-pattern></url-pattern>
-  </servlet-mapping>
+    <!--   mapping of servlet's name to URL pattern which will invoke it.-->
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern></url-pattern> <!-- route all requests to Controller -->
+    </servlet-mapping>
 
-  <error-page>
-    <exception-type>java.lang.Exception</exception-type>
-    <location>/WEB-INF/_error.jsp</location>
-  </error-page>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/WEB-INF/_error.jsp</location>
+    </error-page>
 
 </web-app>

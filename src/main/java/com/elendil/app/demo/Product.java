@@ -1,8 +1,13 @@
 package com.elendil.app.demo;
 
-public class Product {
+//javadoc  fixme
+class Product {
+    private String id;
+    private String title;
+    private String productForm;
 
-    public Product() {}
+
+    public Product() { }
 
     public String getId() {
         return id;
@@ -20,8 +25,11 @@ public class Product {
         this.title = title;
     }
 
-    private String id;
-    private String title;
+    public String getProductForm() {
+        return productForm;
+    }
 
-
+    public void setProductForm(String productForm) {
+        this.productForm = productForm;
+    }
 }

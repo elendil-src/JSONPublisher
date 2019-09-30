@@ -1,8 +1,8 @@
 package com.elendil.app.demo;
 
-public class ProductModelException extends Exception
+class ProductModelException extends Exception
 {
-    public ProductModelException(String message) {
+    ProductModelException(String message) {
         super(message);
     }
 }
