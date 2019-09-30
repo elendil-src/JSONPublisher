@@ -35,7 +35,7 @@
 #search {
 	min-width: 400px;
 }
-}
+
 </style>
 
 	<div class="container">
