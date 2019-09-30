@@ -36,7 +36,6 @@ public class Controller extends javax.servlet.http.HttpServlet {
 
         try {
             Path path = Paths.get(servletCurrPath, configRelPath);
-            //super.log("init():targetpath=" + path.toString()); FIXME
             productModel = new ProductModel(path.toString());
         } catch (Exception e) {
             throw new ServletException(e);
@@ -78,7 +77,6 @@ public class Controller extends javax.servlet.http.HttpServlet {
         } catch (ProductModelException e) {
             throw new ServletException(e);
         }
-        //super.log("FIXME: searchTerm=" + searchTerm + ":action=" + action + ":resultState=" + resultState + ":resultNum=" + productResult.size());
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/catalogue.jsp");
         req.setAttribute("productResult", productResult);
