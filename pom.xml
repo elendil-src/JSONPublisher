@@ -33,7 +33,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.9.8</version>
+      <version>2.10.1</version>
     </dependency>
       <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
       <dependency>
@@ -53,7 +53,7 @@
         <configuration>
           <url>http://localhost:8080/manager/text</url> -- access point to tomcat's mgt interface
           <username>tomcat-script</username>
-          <password>s3cret</password>
+          <password>hidden!</password>    -- must be applied during build - see POM-notes
         </configuration>
       </plugin>
     </plugins>
