@@ -129,6 +129,6 @@ class ProductModel {
         return productStream
                 .filter(p -> titlePartialMatch(searchTerm, p.getTitle()))
                 .sorted(productComparator)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
 }
