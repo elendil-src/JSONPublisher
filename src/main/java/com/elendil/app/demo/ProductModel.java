@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Responsible for integrity and interpretation of the business data that corresponds to Products.
@@ -69,15 +71,15 @@ class ProductModel {
         return filterProducts("");
     }
 
+
     /**
-     * Searches JSON tree for matching products, and then builds the result set. Result set is unordered.
-     *
-     * @param searchTerm term to filter products by
-     * @return ordered list of all Products
-     * @throws ProductModelException if data structure is invalid
+     * Builds a stream of products instances from Json graph. Is tolerant of general graph structure
+     * but will throw if key items are not found.
+     * @return unordered list of all Products as a stream
+     * @throws ProductModelException see filterProducts
      */
-    List<Product> filterProducts(final String searchTerm) throws ProductModelException {
-        List<Product> productsList = new ArrayList<>();
+    private Stream<Product> buildProductStream(Stream.Builder<Product> builder) throws ProductModelException
+    {
 
         Iterator<Map.Entry<String, JsonNode>> products = productTreeNode.fields();
         while (products.hasNext()) {
@@ -102,18 +104,31 @@ class ProductModel {
                 productForm = "";
             }
 
-            if (titlePartialMatch(searchTerm, productTitle)) {
-                Product p = new Product();
-                p.setTitle(productTitle);
-                p.setId(productNode.getKey()); //Child node field name is the primary Product Id
-                p.setProductForm(productForm);
-                productsList.add(p);
-            }
-            Collections.sort(productsList, new ProductComparator() );
-
+            //Child node field name is the primary Product Id
+            builder.accept(new Product(productTitle, productNode.getKey(),productForm) );
         }
-        return productsList;
-
+        return builder.build();
     }
 
+    /**
+     * Searches JSON tree for matching products, and then builds the result set.
+     * Result set is ordered alphabetically ignoring case.
+     *
+     * @param searchTerm term to filter products by
+     * @return ordered list of all Products
+     * @throws ProductModelException if data structure is invalid
+     */
+    List<Product> filterProducts(final String searchTerm) throws ProductModelException {
+
+        Stream<Product> productStream = buildProductStream(Stream.builder());
+
+        Comparator<Product> productComparator = Comparator
+                .comparing(Product::getTitle, String::compareToIgnoreCase)
+                .thenComparing(Product::getId);
+
+        return productStream
+                .filter(p -> titlePartialMatch(searchTerm, p.getTitle()))
+                .sorted(productComparator)
+                .collect(Collectors.toUnmodifiableList());
+    }
 }

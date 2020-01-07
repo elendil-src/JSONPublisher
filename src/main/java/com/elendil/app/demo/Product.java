@@ -11,6 +11,11 @@ public class Product {
     private String title;
     private String productForm;
 
+    public Product(String title, String id,  String productForm) {
+        this.id = id;
+        this.title = title;
+        this.productForm = productForm;
+    }
 
     public Product() { }
 
@@ -37,4 +42,8 @@ public class Product {
     public void setProductForm(String productForm) {
         this.productForm = productForm;
     }
+
+
+
+
 }
