@@ -53,7 +53,7 @@
         <configuration>
           <url>http://localhost:8080/manager/text</url> -- access point to tomcat's mgt interface
           <username>tomcat-script</username>
-          <password>hidden</password>    -- must be applied during build - see POM-notes
+          <password>hidden</password>    -- TODO must be applied during build - see POM-notes
         </configuration>
       </plugin>
       <plugin>
