@@ -7,8 +7,8 @@ phases:
   post_build:
     commands:
       - mvn package
-      - mv target/my-web-app.war my-web-app.war
+      - mv target/JSONPublisher.war JSONPublisher.war
 artifacts:
   files:
-    - my-web-app.war
+    - JSONPublisher.war
     - .ebextensions/**/*
