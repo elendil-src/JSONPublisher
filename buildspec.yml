@@ -12,4 +12,4 @@ artifacts:
   files:
     - JSONPublisher.war
     - .ebextensions/**/*
-    - base-directory: 'target/JSONPublisher'
+  base-directory: 'target/JSONPublisher'
