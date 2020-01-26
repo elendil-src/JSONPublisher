@@ -36,7 +36,8 @@ public class Controller extends javax.servlet.http.HttpServlet {
 
         try {
             Path path = Paths.get(servletCurrPath, configRelPath);
-            productModel = new ProductModel(path.toString());
+
+            productModel = new ProductModelFactory().create(path.toString());
         } catch (Exception e) {
             throw new ServletException(e);
         }
